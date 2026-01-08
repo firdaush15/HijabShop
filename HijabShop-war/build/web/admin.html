@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin Homepage - HijabShop</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+            :root {
+                --primary-pink: #ff8da1;
+                --dark-pink: #d63384;
+                --light-pink-bg: #fff0f3;
+                --sidebar-bg: #ffffff;
+                --text-grey: #555;
+                --light-grey: #f8f9fa;
+            }
+            body {
+                font-family: 'Lato', sans-serif;
+                background-color: var(--light-pink-bg);
+                margin: 0;
+                display: flex;
+                height: 100vh;
+                color: #333;
+            }
+            .sidebar {
+                width: 260px;
+                background-color: var(--sidebar-bg);
+                color: var(--text-grey);
+                display: flex;
+                flex-direction: column;
+                padding: 25px;
+                box-shadow: 2px 0 15px rgba(214, 51, 132, 0.1);
+            }
+            .sidebar h2 {
+                font-family: 'Playfair Display', serif;
+                color: var(--dark-pink);
+                text-align: center;
+                margin-bottom: 50px;
+                font-size: 26px;
+                border-bottom: 2px solid var(--light-pink-bg);
+                padding-bottom: 15px;
+            }
+            .sidebar a {
+                color: var(--text-grey);
+                text-decoration: none;
+                padding: 15px 20px;
+                border-radius: 30px;
+                margin-bottom: 12px;
+                font-weight: bold;
+                transition: 0.3s;
+                display: flex;
+                align-items: center;
+            }
+            .sidebar a:hover, .sidebar a.active {
+                background-color: var(--primary-pink);
+                color: white;
+                box-shadow: 0 4px 10px rgba(255, 141, 161, 0.4);
+            }
+            .sidebar .logout {
+                margin-top: auto;
+                background-color: #fff;
+                border: 2px solid #dc3545;
+                color: #dc3545;
+                text-align: center;
+                justify-content: center;
+            }
+            .sidebar .logout:hover {
+                background-color: #dc3545;
+                color: white;
+            }
+            .main-content {
+                flex: 1;
+                padding: 40px;
+                overflow-y: auto;
+            }
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 40px;
+            }
+            .header h1 {
+                color: var(--dark-pink);
+                font-family: 'Playfair Display', serif;
+                margin: 0;
+                font-size: 32px;
+            }
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 25px;
+                margin-bottom: 40px;
+            }
+            .stat-card {
+                background: white;
+                padding: 25px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+                text-align: center;
+                border-bottom: 4px solid var(--primary-pink);
+                transition: transform 0.2s;
+            }
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+            .stat-number {
+                font-size: 36px;
+                font-weight: bold;
+                color: var(--dark-pink);
+                margin-bottom: 5px;
+            }
+            .stat-label {
+                color: #888;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 30px;
+            }
+            @media (max-width: 1000px) {
+                .dashboard-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .card {
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            }
+            .card-header {
+                border-bottom: 1px solid var(--light-pink-bg);
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                color: var(--dark-pink);
+                font-size: 20px;
+                font-weight: bold;
+                font-family: 'Playfair Display', serif;
+            }
+            label {
+                display: block;
+                margin-top: 15px;
+                font-weight: bold;
+                color: #666;
+                font-size: 14px;
+            }
+            input[type="text"], input[type="number"], input[type="file"] {
+                width: 100%;
+                padding: 12px;
+                margin-top: 8px;
+                border: 1px solid #eee;
+                background-color: #fcfcfc;
+                border-radius: 8px;
+                box-sizing: border-box;
+                font-family: 'Lato', sans-serif;
+            }
+            input:focus {
+                outline: none;
+                border-color: var(--primary-pink);
+                background-color: white;
+            }
+            .btn-submit {
+                background-color: var(--primary-pink);
+                color: white;
+                width: 100%;
+                padding: 15px;
+                border: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: bold;
+                margin-top: 30px;
+                cursor: pointer;
+                transition: 0.3s;
+                box-shadow: 0 4px 10px rgba(255, 141, 161, 0.3);
+            }
+            .btn-submit:hover {
+                background-color: var(--dark-pink);
+                transform: translateY(-2px);
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+            th {
+                text-align: left;
+                padding: 15px;
+                background-color: var(--light-pink-bg);
+                color: var(--dark-pink);
+                font-size: 14px;
+                border-radius: 5px;
+            }
+            td {
+                padding: 15px;
+                border-bottom: 1px solid #f0f0f0;
+                color: #555;
+                font-size: 14px;
+            }
+            tr:last-child td {
+                border-bottom: none;
+            }
+            .status-badge {
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="sidebar">
+            <h2>🌸 HijabShop</h2>
+            <a href="admin.html" class="active">Dashboard</a>
+            <a href="HijabList">Products</a>
+            <a href="#">Orders</a>
+            <a href="#">Customers</a>
+            <a href="HijabList" target="_blank">View Live Shop</a>
+            <a href="LogoutServlet" class="logout">Logout</a>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard Overview</h1>
+                <div style="color: #888;">Welcome back, <b>Admin</b></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">Active</div>
+                    <div class="stat-label">System Status</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">-</div>
+                    <div class="stat-label">Total Products</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">-</div>
+                    <div class="stat-label">Total Orders</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">RM -</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="card">
+                    <div class="card-header">
+                        ➕ Add New Product
+                    </div>
+                    <form action="AddProductServlet" method="POST" enctype="multipart/form-data">
+                        <label>Product SKU (Name)</label>
+                        <input type="text" name="sku" placeholder="e.g. SHAWL-SATIN-RED" required>
+
+                        <label>Price (RM)</label>
+                        <input type="number" name="price" step="0.01" placeholder="0.00" required>
+
+                        <label>Product Image</label>
+                        <input type="file" name="image" accept="image/*" required>
+
+                        <button type="submit" class="btn-submit">Save Product</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        📦 Recent Orders
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 20px;">
+                                    Live order data is not available in static mode.<br>
+                                    <small>Use DashboardServlet (admin.jsp) to see live data.</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </body>
+</html>
